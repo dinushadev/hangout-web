@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+  <!-- regular spring configuration file defining the beans for this
+       bundle. We've kept the osgi definitions in a separate 
+       configuration file so that this file can easily be used
+       for integration testing outside of an OSGi environment -->
+
+
+	<!-- externalised spring bean properties -->
+	<!-- <bean id="PropertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				The order of these properties files is important, as properties 
+					will override one another
+				<value>../properties/dcs.properties</value>
+			</list>
+		</property>
+	</bean>
+		<jdbc:embedded-database id="dataSource" type="H2"/> -->
+ <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	
+		<property name="annotatedClasses">
+			<list>
+			<!-- 	<value>com.dns.docchannel.domain.User</value> -->
+			</list>
+		</property>
+		
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+				 <prop key="hibernate.connection.pool_size">1</prop>
+				<!--  <prop key="hibernate.connection.datasource">java:JKCS_CAB_DS</prop>   -->
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/test</prop>
+                <prop key="hibernate.connection.username">root</prop>
+                <prop key="hibernate.connection.password">123</prop>
+                <prop key="hibernate.connection.autocommit">true</prop>
+             
+                <prop key="hibernate.jdbc.batch_size">0</prop>
+				
+				<prop key="hibernate.show_sql">true</prop>
+			
+			</props>
+		</property>
+		
+	</bean>
+  
+  <bean name="myBean" class="com.docchannel.impl.BeanImpl" />
+
+  <bean name="userService" class="com.docchannel.serviceimpl.UserServiceImpl" />
+</beans>

@@ -8,6 +8,7 @@ public class UserDAOImpl extends CommonHibernteDAO implements UserDAO{
 
 	public User addUser(User user) {
 		getHibernateTemplate().save(user);
+		
 		return null;
 	}
 
